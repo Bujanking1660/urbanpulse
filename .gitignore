@@ -1,0 +1,138 @@
+# ============================================================
+#  .gitignore — Python / Data Science Project (UrbanPulse)
+# ============================================================
+
+# ---------------------------
+# Python
+# ---------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+eggs/
+parts/
+var/
+sdist/
+develop-eggs/
+.installed.cfg
+lib/
+lib64/
+*.whl
+
+# ---------------------------
+# Virtual Environments
+# ---------------------------
+.venv*/
+venv/
+env/
+ENV/
+.env
+.venv
+
+# ---------------------------
+# Jupyter Notebooks
+# ---------------------------
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/*
+# Duplicate / versioned notebooks (uncomment jika mau ignore)
+# **(1).ipynb
+# **(2).ipynb
+# **(3).ipynb
+
+# ---------------------------
+# Data Files (besar / sensitif)
+# ---------------------------
+data/raw/
+data/external/
+*.csv
+*.xlsx
+*.xls
+*.parquet
+*.feather
+*.h5
+*.hdf5
+*.db
+*.sqlite
+*.pkl
+*.pickle
+*.npy
+*.npz
+
+# ---------------------------
+# Model Artifacts
+# ---------------------------
+models/*.pkl
+models/*.joblib
+models/*.h5
+models/*.pt
+models/*.pth
+models/*.onnx
+models/*.bin
+
+# ---------------------------
+# Output / Generated Files
+# ---------------------------
+outputs/
+*.log
+*.out
+
+# ---------------------------
+# Images / Plots (generated)
+# ---------------------------
+*.png
+*.jpg
+*.jpeg
+*.svg
+*.pdf
+
+# ---------------------------
+# OS & Editor
+# ---------------------------
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# PyCharm / JetBrains
+.idea/
+
+# Jupyter
+.jupyter/
+
+# ---------------------------
+# Environment / Secrets
+# ---------------------------
+.env
+.env.*
+*.env
+secrets.yaml
+secrets.json
+config/local_settings.py
+
+# ---------------------------
+# Testing & Coverage
+# ---------------------------
+.pytest_cache/
+.coverage
+htmlcov/
+coverage.xml
+*.cover
+.tox/
+
+# ---------------------------
+# Misc
+# ---------------------------
+*.tmp
+*.bak
+*.swp
+*.swo
+~$*

@@ -1,0 +1,94 @@
+{
+  "model_file": "slum_xgb_pipeline.joblib",
+  "model_type": "XGBClassifier",
+  "threshold": 0.04,
+  "threshold_selection_method": "max precision subject to recall >= 0.8 (random stratified split)",
+  "feature_names": [
+    "area_m2",
+    "ndvi_mean",
+    "ndvi_stdDev",
+    "ndbi_mean",
+    "ndbi_stdDev",
+    "bsi_mean",
+    "bsi_stdDev",
+    "brightness_mean",
+    "brightness_stdDev",
+    "ndbi_contrast_mean",
+    "ndbi_contrast_stdDev",
+    "ndbi_ent_mean",
+    "ndbi_ent_stdDev",
+    "ndbi_var_mean",
+    "ndbi_var_stdDev",
+    "VV_mean",
+    "VV_stdDev",
+    "VH_mean",
+    "VH_stdDev",
+    "vv_vh_mean",
+    "vv_vh_stdDev",
+    "building_fractional_count_mean",
+    "building_fractional_count_stdDev",
+    "building_height_mean",
+    "building_height_stdDev",
+    "building_presence_mean",
+    "building_presence_stdDev",
+    "b_count",
+    "b_area_sum",
+    "b_area_mean",
+    "b_area_std",
+    "b_area_median",
+    "b_coverage",
+    "b_density_km2",
+    "built_minus_green",
+    "texture_to_built_ratio",
+    "small_building_dominance",
+    "dense_lowrise",
+    "packing_tightness",
+    "b_size_cv",
+    "sar_built_interaction"
+  ],
+  "n_features": 41,
+  "target_column": "slum",
+  "cities": [
+    "ambon",
+    "dki",
+    "kebumen",
+    "samarinda"
+  ],
+  "n_training_rows": 830,
+  "class_balance": {
+    "slum": 118,
+    "non_slum": 712,
+    "pct_slum": 14.22
+  },
+  "validation_metrics": {
+    "random_split": {
+      "recall": 0.8261,
+      "precision": 0.2468,
+      "f1": 0.38,
+      "roc_auc": 0.7963
+    },
+    "loco_at_threshold": {
+      "recall_mean": 0.783,
+      "precision_mean": 0.4276,
+      "f1_mean": 0.4577
+    },
+    "loco_default_threshold_0_5": {
+      "recall_mean": 0.498,
+      "precision_mean": 0.289,
+      "roc_auc_mean": 0.695
+    }
+  },
+  "top_global_features": {
+    "building_presence_stdDev": 0.47290000319480896,
+    "b_coverage": 0.39469999074935913,
+    "ndbi_var_stdDev": 0.325300008058548,
+    "b_area_mean": 0.3100999891757965,
+    "VV_stdDev": 0.27129998803138733,
+    "building_fractional_count_stdDev": 0.26589998602867126,
+    "ndbi_contrast_mean": 0.2522999942302704,
+    "ndbi_stdDev": 0.2460000067949295,
+    "ndbi_ent_mean": 0.24480000138282776,
+    "dense_lowrise": 0.23839999735355377
+  },
+  "trained_on": "2026-06-27"
+}

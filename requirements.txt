@@ -1,0 +1,34 @@
+# ============================================================
+# Urban Pulse — Requirements
+# Python 3.10 | venv: .venv
+#
+# Covers kedua notebook:
+#   - preprocessing.ipynb
+#   - modeling.ipynb
+#
+# Versi SHAP dan XGBoost di-pin agar kompatibel satu sama lain:
+#   XGBoost >= 2.0 mengubah format base_score menjadi '[5E-1]'
+#   sehingga SHAP < 0.44 akan crash di TreeExplainer.
+#   Pin shap>=0.44.0 memastikan parser base_score sudah diperbaiki.
+# ============================================================
+
+# --- Core data ---
+numpy>=1.24,<2.0
+pandas>=2.0,<3.0
+
+# --- Machine learning ---
+scikit-learn>=1.3,<2.0
+xgboost>=2.0,<3.0
+
+# --- Interpretability (kompatibel dengan XGBoost>=2.0) ---
+shap>=0.44.0,<1.0
+
+# --- Serialisasi model ---
+joblib>=1.3,<2.0
+
+# --- Visualisasi ---
+matplotlib>=3.7,<4.0
+
+# --- Notebook runtime ---
+jupyter>=1.0
+ipykernel>=6.0
