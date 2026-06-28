@@ -436,4 +436,3 @@ loco_summary.to_csv(OUT_DIR / "loco_fold_summary.csv", index=False)
 | **Karakteristik fisik slum** | Urban Science (2024), 8(4), doi:10.3390/urbansci8040189 |
 | **SAR Sentinel-1 untuk built-up** | Koppel et al. (2017), *Int. Journal of Remote Sensing*, 38(22) |
 | **Spatial cross-validation** | Roberts et al. (2017), *Ecography*, 40(8); Le Rest et al. (2014), *Global Ecology and Biogeography* |
-# urbanpulse
