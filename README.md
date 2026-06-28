@@ -436,4 +436,73 @@ loco_summary.to_csv(OUT_DIR / "loco_fold_summary.csv", index=False)
 | **Karakteristik fisik slum** | Urban Science (2024), 8(4), doi:10.3390/urbansci8040189 |
 | **SAR Sentinel-1 untuk built-up** | Koppel et al. (2017), *Int. Journal of Remote Sensing*, 38(22) |
 | **Spatial cross-validation** | Roberts et al. (2017), *Ecography*, 40(8); Le Rest et al. (2014), *Global Ecology and Biogeography* |
-# urbanpulse
+
+---
+
+# Urban Pulse — Dokumentasi Modeling Pipeline
+
+> **Files**: [modeling_combine.ipynb](file:///d:/urbanpulse/modeling_combine.ipynb) (Combined Comparison), [modeling.ipynb](file:///d:/urbanpulse/modeling.ipynb) (XGBoost), [randomforest.ipynb](file:///d:/urbanpulse/randomforest.ipynb) (Random Forest)  
+> **Tujuan**: Membangun model machine learning terbaik untuk klasifikasi biner slum/non-slum dengan skema evaluasi yang robust terhadap autokorelasi spasial, serta menghasilkan penjelasan prediktor penting berbasis SHAP.
+
+---
+
+## 📁 Struktur Input & Output Modeling
+
+| Jenis | Path | Keterangan |
+|---|---|---|
+| **Input** | `data/processed/features_buildings_clean.csv` | Dataset bersih hasil preprocessing |
+| **Input** | `data/processed/feature_columns.csv` | Daftar 41 fitur terpilih |
+| **Output** | `models/slum_xgb_pipeline.joblib` | Model final XGBoost terlatih |
+| **Output** | `models/model_metadata.json` | Kredensial & metrik evaluasi model XGBoost |
+| **Output** | `models/slum_rf_pipeline.joblib` | Model final Random Forest terlatih |
+| **Output** | `models/model_rf_metadata.json` | Kredensial & metrik evaluasi model Random Forest |
+| **Output** | `models/model_comparison.png` | Grafik komparasi performa model |
+
+---
+
+## 🤖 Ringkasan Metode Pemodelan
+
+Proyek ini mengeksplorasi dua algoritma berbasis pohon (*tree-based models*) yang tangguh terhadap data tabular:
+1. **XGBoost (Extreme Gradient Boosting)**: Boosting sekuensial yang melatih pohon baru untuk mengoreksi error dari pohon sebelumnya. Sangat baik dalam mendeteksi batas kelas yang rumit spasi (*spatial transferability*).
+2. **Random Forest**: Bagging paralel yang merata-ratakan prediksi ratusan pohon keputusan independen. Sangat stabil terhadap overfitting spuria pada dataset ukuran kecil.
+
+---
+
+## 🔬 Skema Evaluasi & Parameter Best Practice
+
+### 1. Leave-One-City-Out (LOCO) Cross-Validation (Metrik Utama)
+Karena data spasial memiliki korelasi lokal, model dievaluasi secara silang dengan menahan satu kota penuh sebagai data testing, dan melatih model pada tiga kota lainnya. Ini memastikan evaluasi model mencerminkan kinerja saat di-deploy ke kota baru (*transferability*).
+
+### 2. Penanganan Class Imbalance
+* **XGBoost**: Menggunakan parameter `scale_pos_weight` yang dihitung dinamis pada data training di setiap fold LOCO.
+* **Random Forest**: Menggunakan parameter `class_weight='balanced_subsample'` yang menghitung ulang bobot kelas secara dinamis untuk setiap sampel bootstrap pohon.
+
+### 3. Cost-Sensitive Threshold Tuning
+Model menggeser threshold probabilitas (default 0.5) untuk memprioritaskan **Recall kelas slum $\ge 0.80$** (karena melompati area kumuh jauh lebih merugikan secara kebijakan daripada kesalahan deteksi positif palsu).
+* Threshold tuned **XGBoost**: `0.0900`
+* Threshold tuned **Random Forest**: `0.4100`
+
+---
+
+## 📊 Hasil Komparasi Model Spasial (LOCO Tuned)
+
+Grafik komparasi lengkap disimpan pada file `models/model_comparison.png`.
+
+| Metrik Evaluasi | XGBoost (Threshold: 0.09) | Random Forest (Threshold: 0.41) |
+|---|---|---|
+| **Recall (Random Split)** | 0.8261 | 0.8261 |
+| **Precision (Random Split)** | 0.2468 | **0.3725** |
+| **ROC-AUC (Random Split)** | 0.7963 | **0.8310** |
+| **Recall Rata-rata (LOCO)** | **0.7050** | 0.6482 |
+| **Precision Rata-rata (LOCO)** | **0.4100** | 0.2810 |
+
+---
+
+## 📚 Referensi Akademik Modeling
+
+| Algoritma / Metode | Referensi |
+|---|---|
+| **XGBoost** | Chen, T., & Guestrin, C. (2016). XGBoost: A scalable tree boosting system. |
+| **Random Forest** | Breiman, L. (2001). Random Forests. *Machine Learning*, 45(1), 5-32. |
+| **SHAP** | Lundberg, S. M., & Lee, S. I. (2017). A unified approach to interpreting model predictions. |
+| **Class Imbalance** | King, G., & Zeng, L. (2001). Logistic regression in rare events data. |

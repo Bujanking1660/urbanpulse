@@ -1,7 +1,7 @@
 {
-  "model_file": "model_metadata.json",
-  "model_type": "XGBClassifier",
-  "threshold": 0.09,
+  "model_file": "model_rf_metadata.json",
+  "model_type": "RandomForestClassifier",
+  "threshold": 0.41,
   "threshold_selection_method": "max precision subject to recall >= 0.8 (random stratified split)",
   "feature_names": [
     "area_m2",
@@ -63,26 +63,26 @@
   "validation_metrics": {
     "random_split": {
       "recall": 0.8261,
-      "precision": 0.3393,
-      "f1": 0.481,
-      "roc_auc": 0.8045
+      "precision": 0.3725,
+      "f1": 0.5135,
+      "roc_auc": 0.831
     },
     "loco_at_threshold": {
-      "recall_mean": 0.7052,
-      "precision_mean": 0.4098
+      "recall_mean": 0.6482,
+      "precision_mean": 0.281
     }
   },
   "top_global_features": {
-    "b_coverage": 0.37529999017715454,
-    "building_presence_stdDev": 0.36739999055862427,
-    "ndbi_var_stdDev": 0.30410000681877136,
-    "b_area_mean": 0.29649999737739563,
-    "building_fractional_count_stdDev": 0.2736000120639801,
-    "VV_stdDev": 0.26589998602867126,
-    "dense_lowrise": 0.2498999983072281,
-    "ndbi_contrast_mean": 0.23810000717639923,
-    "ndbi_stdDev": 0.23000000417232513,
-    "ndbi_ent_mean": 0.2296999990940094
+    "building_presence_mean": 0.0347,
+    "b_coverage": 0.0332,
+    "building_presence_stdDev": 0.0325,
+    "b_density_km2": 0.0251,
+    "ndbi_var_stdDev": 0.0194,
+    "vv_vh_stdDev": 0.0177,
+    "VV_stdDev": 0.0163,
+    "building_height_mean": 0.0152,
+    "building_fractional_count_mean": 0.0149,
+    "building_fractional_count_stdDev": 0.0144
   },
   "trained_on": "2026-06-28"
 }
