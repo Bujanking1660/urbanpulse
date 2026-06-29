@@ -456,15 +456,17 @@ loco_summary.to_csv(OUT_DIR / "loco_fold_summary.csv", index=False)
 | **Output** | `models/model_metadata.json` | Kredensial & metrik evaluasi model XGBoost |
 | **Output** | `models/slum_rf_pipeline.joblib` | Model final Random Forest terlatih |
 | **Output** | `models/model_rf_metadata.json` | Kredensial & metrik evaluasi model Random Forest |
-| **Output** | `models/model_comparison.png` | Grafik komparasi performa model |
+| **Output** | `models/model_comparison.png` | Grafik komparasi performa model (XGBoost, RF, Ensemble) |
+| **Output** | `modeling_combine_report.md` | Laporan lengkap komparasi performa model gabungan |
 
 ---
 
 ## 🤖 Ringkasan Metode Pemodelan
 
-Proyek ini mengeksplorasi dua algoritma berbasis pohon (*tree-based models*) yang tangguh terhadap data tabular:
+Proyek ini mengeksplorasi dua algoritma berbasis pohon (*tree-based models*) serta hasil ensemblenya yang tangguh terhadap data tabular:
 1. **XGBoost (Extreme Gradient Boosting)**: Boosting sekuensial yang melatih pohon baru untuk mengoreksi error dari pohon sebelumnya. Sangat baik dalam mendeteksi batas kelas yang rumit spasi (*spatial transferability*).
 2. **Random Forest**: Bagging paralel yang merata-ratakan prediksi ratusan pohon keputusan independen. Sangat stabil terhadap overfitting spuria pada dataset ukuran kecil.
+3. **Ensemble (Gabungan)**: Model kombinasi berbasis soft-voting yang merata-ratakan probabilitas prediksi dari model XGBoost dan Random Forest untuk menstabilkan prediksi dan mengurangi variabilitas kesalahan spuria.
 
 ---
 
@@ -481,20 +483,21 @@ Karena data spasial memiliki korelasi lokal, model dievaluasi secara silang deng
 Model menggeser threshold probabilitas (default 0.5) untuk memprioritaskan **Recall kelas slum $\ge 0.80$** (karena melompati area kumuh jauh lebih merugikan secara kebijakan daripada kesalahan deteksi positif palsu).
 * Threshold tuned **XGBoost**: `0.0900`
 * Threshold tuned **Random Forest**: `0.4100`
+* Threshold tuned **Ensemble (Gabungan)**: `0.2500`
 
 ---
 
 ## 📊 Hasil Komparasi Model Spasial (LOCO Tuned)
 
-Grafik komparasi lengkap disimpan pada file `models/model_comparison.png`.
+Laporan detail dan visualisasi lengkap disimpan pada berkas **[modeling_combine_report.md](file:///d:/urbanpulse/modeling_combine_report.md)** dan `models/model_comparison.png`.
 
-| Metrik Evaluasi | XGBoost (Threshold: 0.09) | Random Forest (Threshold: 0.41) |
-|---|---|---|
-| **Recall (Random Split)** | 0.8261 | 0.8261 |
-| **Precision (Random Split)** | 0.2468 | **0.3725** |
-| **ROC-AUC (Random Split)** | 0.7963 | **0.8310** |
-| **Recall Rata-rata (LOCO)** | **0.7050** | 0.6482 |
-| **Precision Rata-rata (LOCO)** | **0.4100** | 0.2810 |
+| Metrik Evaluasi | XGBoost (Threshold: 0.09) | Random Forest (Threshold: 0.41) | Ensemble (Threshold: 0.25) |
+|---|---|---|---|
+| **Recall (Random Split)** | **0.8261** | **0.8261** | **0.8261** |
+| **Precision (Random Split)** | `0.3393` | **`0.3725`** | `0.3393` |
+| **ROC-AUC (Random Split)** | `0.8045` | **`0.8310`** | `0.8227` |
+| **Recall Rata-rata (LOCO)** | **`0.7052`** | `0.6482` | `0.6562` |
+| **Precision Rata-rata (LOCO)** | **`0.4098`** | `0.2810` | `0.2797` |
 
 ---
 
